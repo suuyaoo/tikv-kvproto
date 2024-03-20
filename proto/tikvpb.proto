@@ -1,7 +1,6 @@
 syntax = "proto3";
 package tikvpb;
 
-import "coprocessor.proto";
 import "kvrpcpb.proto";
 import "raft_serverpb.proto";
 
@@ -53,11 +52,6 @@ service Tikv {
     rpc RemoveLockObserver(kvrpcpb.RemoveLockObserverRequest) returns (kvrpcpb.RemoveLockObserverResponse) {}
     rpc PhysicalScanLock(kvrpcpb.PhysicalScanLockRequest) returns (kvrpcpb.PhysicalScanLockResponse) {}
 
-    // SQL push down commands.
-    rpc Coprocessor(coprocessor.Request) returns (coprocessor.Response) {}
-    rpc CoprocessorStream(coprocessor.Request)  returns (stream coprocessor.Response) {}
-    rpc BatchCoprocessor(coprocessor.BatchRequest) returns (stream coprocessor.BatchResponse) {}
-
     // Raft commands (tikv <-> tikv).
     rpc Raft(stream raft_serverpb.RaftMessage) returns (raft_serverpb.Done) {}
     rpc BatchRaft(stream BatchRaftMessage) returns (raft_serverpb.Done) {}
@@ -103,7 +97,6 @@ message BatchCommandsRequest {
             kvrpcpb.RawDeleteRangeRequest RawDeleteRange = 20;
             kvrpcpb.RawBatchScanRequest RawBatchScan = 21;
 
-            coprocessor.Request Coprocessor = 22;
             kvrpcpb.PessimisticLockRequest PessimisticLock = 23;
             kvrpcpb.PessimisticRollbackRequest PessimisticRollback = 24;
 
@@ -147,7 +140,6 @@ message BatchCommandsResponse {
             kvrpcpb.RawDeleteRangeResponse RawDeleteRange = 20;
             kvrpcpb.RawBatchScanResponse RawBatchScan = 21;
 
-            coprocessor.Response Coprocessor = 22;
             kvrpcpb.PessimisticLockResponse PessimisticLock = 23;
             kvrpcpb.PessimisticRollbackResponse PessimisticRollback = 24;
 
