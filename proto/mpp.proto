@@ -2,7 +2,6 @@ syntax = "proto3";
 package mpp;
 
 import "gogoproto/gogo.proto";
-import "coprocessor.proto";
 import "metapb.proto";
 
 option (gogoproto.marshaler_all) = true;
@@ -31,7 +30,6 @@ message DispatchTaskRequest {
 	TaskMeta meta = 1;
 	bytes encoded_plan = 2;
 	int64 timeout = 3;
-        repeated coprocessor.RegionInfo regions = 4; 
 	// If this task contains table scan, we still need their region info.
 	int64 schema_ver = 5;
 }

@@ -1,7 +1,6 @@
 syntax = "proto3";
 package tikvpb;
 
-import "coprocessor.proto";
 import "kvrpcpb.proto";
 import "mpp.proto";
 import "raft_serverpb.proto";
@@ -59,15 +58,6 @@ service Tikv {
     rpc CheckLockObserver(kvrpcpb.CheckLockObserverRequest) returns (kvrpcpb.CheckLockObserverResponse) {}
     rpc RemoveLockObserver(kvrpcpb.RemoveLockObserverRequest) returns (kvrpcpb.RemoveLockObserverResponse) {}
     rpc PhysicalScanLock(kvrpcpb.PhysicalScanLockRequest) returns (kvrpcpb.PhysicalScanLockResponse) {}
-
-    // Commands for executing SQL in the TiKV coprocessor (i.e., 'pushed down' to TiKV rather than
-    // executed in TiDB).
-    rpc Coprocessor(coprocessor.Request) returns (coprocessor.Response) {}
-    rpc CoprocessorStream(coprocessor.Request) returns (stream coprocessor.Response) {}
-    rpc BatchCoprocessor(coprocessor.BatchRequest) returns (stream coprocessor.BatchResponse) {}
-
-    // Command for executing custom user requests in TiKV coprocessor_v2.
-    rpc RawCoprocessor(kvrpcpb.RawCoprocessorRequest) returns (kvrpcpb.RawCoprocessorResponse) {}
 
     // Raft commands (sent between TiKV nodes).
     rpc Raft(stream raft_serverpb.RaftMessage) returns (raft_serverpb.Done) {}
@@ -135,7 +125,6 @@ message BatchCommandsRequest {
             kvrpcpb.RawDeleteRangeRequest RawDeleteRange = 20;
             kvrpcpb.RawBatchScanRequest RawBatchScan = 21;
 
-            coprocessor.Request Coprocessor = 22;
             kvrpcpb.PessimisticLockRequest PessimisticLock = 23;
             kvrpcpb.PessimisticRollbackRequest PessimisticRollback = 24;
 
@@ -143,8 +132,6 @@ message BatchCommandsRequest {
             kvrpcpb.TxnHeartBeatRequest TxnHeartBeat = 26;
 
             kvrpcpb.CheckSecondaryLocksRequest CheckSecondaryLocks = 33;
-
-            kvrpcpb.RawCoprocessorRequest RawCoprocessor = 34;
 
             // For some test cases.
             BatchCommandsEmptyRequest Empty = 255;
@@ -186,7 +173,6 @@ message BatchCommandsResponse {
             kvrpcpb.RawDeleteRangeResponse RawDeleteRange = 20;
             kvrpcpb.RawBatchScanResponse RawBatchScan = 21;
 
-            coprocessor.Response Coprocessor = 22;
             kvrpcpb.PessimisticLockResponse PessimisticLock = 23;
             kvrpcpb.PessimisticRollbackResponse PessimisticRollback = 24;
 
@@ -194,8 +180,6 @@ message BatchCommandsResponse {
             kvrpcpb.TxnHeartBeatResponse TxnHeartBeat = 26;
 
             kvrpcpb.CheckSecondaryLocksResponse CheckSecondaryLocks = 33;
-
-            kvrpcpb.RawCoprocessorResponse RawCoprocessor = 34;
 
             // For some test cases.
             BatchCommandsEmptyResponse Empty = 255;
