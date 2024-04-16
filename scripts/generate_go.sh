@@ -19,8 +19,9 @@ GO_PREFIX_PATH=github.com/pingcap/kvproto/pkg
 export PATH=$KVPROTO_ROOT/_tools/bin:$GOPATH/bin:$PATH
 
 echo "install tools..."
-GO111MODULE=off go get github.com/twitchtv/retool
-GO111MODULE=off retool sync || exit 1
+go install github.com/gogo/protobuf/protoc-gen-gofast@636bf0302bc95575d69441b25a2603156ffdddf1
+go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@f7120437bb4f6c71f7f5076ad65a45310de2c009
+go install golang.org/x/tools/cmd/goimports@04b5d21e00f1f47bd824a6ade581e7189bacde87
 
 function collect() {
     file=$(basename $1)
