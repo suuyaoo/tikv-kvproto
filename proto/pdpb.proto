@@ -329,6 +329,7 @@ message Member {
     string binary_version = 7;
     string git_hash = 8;
     string dc_location = 9;
+    bool is_learner = 10;
 }
 
 message GetMembersRequest {
